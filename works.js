@@ -96,6 +96,12 @@ const WORKS = [
     image: "shots/classboard.jpg",
   },
   {
+    title: "여름방학 과제 빙고",
+    description: "칸을 누르면 과제를 올릴 수 있고, 제출한 칸이 모이면 빙고가 되는 여름방학 과제판",
+    url: "https://bit.ly/새싹여름방학",
+    shelf: "웹앱",
+  },
+  {
     title: "학생 과제 체크리스트",
     description: "학생들의 과제 제출을 확인하는 체크리스트",
     url: "https://liebe842.github.io/assignment-checker/",
