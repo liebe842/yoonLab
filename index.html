@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>yoonLab 작품 전시관</title>
+<meta name="description" content="직접 만든 코딩 작품을 책장에 꽂아 둔 전시관입니다. 책을 누르면 표지가 보이고, 열어 보기를 누르면 작품이 열립니다.">
+<meta property="og:title" content="yoonLab 작품 전시관">
+<meta property="og:description" content="직접 만든 코딩 작품을 책장에 꽂아 두었습니다. 책을 눌러 구경해 보세요.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='5' width='7' height='23' rx='1.500' fill='%23263C63'/%3E%3Crect x='12.500' y='8' width='7' height='20' rx='1.500' fill='%23B4472D'/%3E%3Crect x='21' y='4' width='7' height='24' rx='1.500' fill='%23D6A021'/%3E%3Crect x='2' y='28' width='28' height='3' rx='1' fill='%237B4A28'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="top">
+  <header class="intro">
+    <h1>yoonLab 작품 전시관</h1>
+    <p id="guide">책장에서 책을 누르면 표지가 보여요. 표지의 ‘열어 보기’를 누르면 작품이 열립니다.</p>
+    <p class="count" id="count"></p>
+  </header>
+  <section class="stage" id="stage" aria-live="polite" aria-label="뽑아 든 책">
+    <div class="bk" id="bk"></div>
+  </section>
+</div>
+
+<div class="case" id="case">
+  <div class="case-top plank"></div>
+  <div class="case-body" id="shelves"></div>
+  <div class="case-base plank"></div>
+</div>
+
+<!-- 화면에 책장 윗부분이 안 보일 때(휴대폰, 아래쪽 선반)는 뽑은 책을 화면 가운데에 띄운다 -->
+<dialog class="viewer" id="viewer" aria-label="뽑아 든 책">
+  <div class="viewer-in">
+    <div class="hold" id="hold"><div class="bk" id="bk2"></div></div>
+    <form method="dialog"><button class="putback">책장으로 돌아가기</button></form>
+  </div>
+</dialog>
+
+<noscript><p class="empty">이 페이지는 자바스크립트가 켜져 있어야 책장이 보입니다.</p></noscript>
+
+<script src="works.js"></script>
+<script src="gallery.js"></script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+/* yoonLab 작품 전시관 — 모양
+   배치: 줄무늬 벽지 방에 놓인 호두나무 책장 하나.
+   책장 위(오른쪽)에는 뽑아 든 책이 표지를 보이며 서 있고, 그 왼쪽 벽에 제목 글씨.
+   책장 안에는 작품이 칸별로 책등을 보이며 꽂혀 있다. 좁은 화면에서는 제목 → 뽑은 책 → 책장 순서. */
+:root {
+  --wall: #CFD8C6; --wall-stripe: rgba(255, 255, 255, .26);
+  --ink: #232A20; --ink-soft: #46503F;
+  --wood: #7B4A28; --wood-light: #A06A3B; --wood-dark: #48290F; --back: #2F1B0D;
+  --floor: #6A4425; --floor-dark: #4A2D15; --skirting: #EEF0E6;
+  --paper: #F5EEDB; --brass: #B08A4E;
+  --serif: "Nanum Myeongjo", "AppleMyungjo", "Batang", serif;
+  --sans: "Gowun Dodum", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --k: 1;                              /* 책 크기 배율 */
+  --R: calc(266px * var(--k));         /* 선반 한 칸 높이 */
+  --B: 18px;                           /* 선반 널 두께 */
+  --W: 300px;                          /* 뽑은 책 표지 너비 */
+  --T: 52px;                           /* 뽑은 책 두께 */
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  min-height: 100vh; min-height: 100dvh; overflow-x: hidden; overflow-x: clip;
+  padding: clamp(18px, 3.6vw, 40px) clamp(12px, 3.4vw, 44px) 58px;
+  font-family: var(--sans); color: var(--ink);
+  background:
+    linear-gradient(to top, transparent 0 64px, rgba(0, 0, 0, .16) 64px, transparent 92px),
+    linear-gradient(to top, var(--floor-dark) 0, var(--floor) 46px, var(--floor) 46px, var(--skirting) 46px 64px, transparent 64px),
+    repeating-linear-gradient(90deg, var(--wall-stripe) 0 3px, transparent 3px 46px),
+    linear-gradient(180deg, #D9E0D1, var(--wall) 70%);
+}
+
+/* ── 벽의 제목과 뽑아 든 책 ── */
+.top {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end;
+  gap: 18px clamp(20px, 5vw, 72px);
+  max-width: 1040px; margin: 0 auto; padding: 0 clamp(2px, 2vw, 22px);
+}
+.intro { padding-bottom: clamp(22px, 4.4vw, 58px); min-width: 0; }
+.intro h1 { margin: 0; font-family: var(--serif); font-weight: 800; font-size: clamp(2.1rem, 5vw, 3.5rem); line-height: 1.12; letter-spacing: -.01em; word-break: keep-all; }
+.intro p { margin: clamp(10px, 1.6vw, 18px) 0 0; max-width: 23em; font-size: clamp(1rem, 1.5vw, 1.12rem); line-height: 1.7; color: var(--ink-soft); word-break: keep-all; text-wrap: pretty; }
+.intro .count { margin-top: 6px; font-family: var(--serif); font-weight: 700; color: var(--ink); }
+.intro .count:empty { display: none; }
+
+.stage { position: relative; z-index: 5; width: var(--W); margin-right: clamp(6px, 3vw, 34px); }
+.stage::before { /* 책장 위에 떨어지는 그림자 */
+  content: ""; position: absolute; z-index: -1; left: -16%; right: -8%; bottom: -13px; height: 30px;
+  background: radial-gradient(closest-side, rgba(20, 12, 4, .55), transparent); filter: blur(4px);
+}
+.bk {
+  position: relative; width: var(--W); color: var(--f);
+  transform: perspective(2200px) rotateY(22deg); transform-style: preserve-3d;
+}
+.cloth { /* 천 양장 표지 결 */
+  background-color: var(--c);
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, .04) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, .05) 0 1px, transparent 1px 3px);
+}
+.front {
+  position: relative; display: flex; flex-direction: column; align-items: flex-start;
+  min-height: calc(var(--W) * 1.46); padding: 26px 24px 24px 34px; border-radius: 2px 7px 7px 2px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1), inset -3px 0 5px rgba(0, 0, 0, .22), 10px 10px 26px rgba(20, 12, 4, .4);
+}
+.front::before { /* 책등 쪽 꺾이는 홈 */
+  content: ""; position: absolute; top: 0; bottom: 0; left: 12px; width: 7px;
+  background: linear-gradient(90deg, rgba(0, 0, 0, .3), rgba(255, 255, 255, .12));
+}
+.front::after { /* 박으로 찍은 테두리 선 */
+  content: ""; position: absolute; inset: 12px 11px 12px 24px; border: 1px solid currentColor; border-radius: 3px; opacity: .42; pointer-events: none;
+}
+.front > * { position: relative; z-index: 1; }
+.plate { display: block; align-self: stretch; padding: 5px; background: var(--paper); box-shadow: 0 2px 7px rgba(0, 0, 0, .4); }
+.plate img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top center; }
+.ct { margin: 18px 0 0; font-family: var(--serif); font-weight: 800; font-size: clamp(1.4rem, calc(var(--W) * .088), 1.7rem); line-height: 1.25; word-break: keep-all; overflow-wrap: anywhere; }
+.ct.small { font-size: clamp(1.15rem, calc(var(--W) * .072), 1.35rem); }
+.cd { margin: 9px 0 18px; font-size: .95rem; line-height: 1.62; opacity: .92; word-break: keep-all; overflow-wrap: anywhere; }
+.ct + .go { margin-top: 18px; }
+.go { margin-top: auto; padding: 10px 20px 9px; border-radius: 6px; background: var(--f); color: var(--c); font-size: 1rem; text-decoration: none; box-shadow: 0 3px 0 rgba(0, 0, 0, .32); }
+.go:hover { transform: translateY(-1px); box-shadow: 0 4px 0 rgba(0, 0, 0, .32); }
+.go:focus-visible, .plate:focus-visible { outline: 3px solid var(--f); outline-offset: 4px; }
+
+/* 사진이 없는 작품: 제목 글씨로 꾸민 표지 */
+.front.typo { align-items: center; text-align: center; }
+.front.typo .rule { align-self: stretch; height: 9px; margin: 0 10px; border-top: 2px solid currentColor; border-bottom: 1px solid currentColor; opacity: .7; }
+.front.typo .rule:first-child { margin-top: 30px; }
+.front.typo .ct { margin: 26px 0; font-size: clamp(2.3rem, calc(var(--W) * .165), 3.1rem); line-height: 1.18; }
+.front.typo.long .ct { font-size: clamp(1.7rem, calc(var(--W) * .115), 2.1rem); }
+.front.typo.longer .ct { font-size: clamp(1.25rem, calc(var(--W) * .085), 1.5rem); line-height: 1.3; }
+.front.typo .cd { margin-top: 24px; }
+
+/* 뽑은 책의 책등(옆면) */
+.side {
+  position: absolute; top: 0; left: calc(var(--T) * -1); width: var(--T); height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  transform-origin: 100% 50%; transform: rotateY(-90deg);
+  border-radius: 3px 0 0 3px; box-shadow: inset 0 0 0 100px rgba(0, 0, 0, .16), inset 6px 0 8px rgba(0, 0, 0, .25);
+}
+.side::before, .side::after, .spine::before, .spine::after { /* 책등의 박 띠 */
+  content: ""; position: absolute; left: 14%; right: 14%; height: 6px;
+  border-top: 2px solid currentColor; border-bottom: 1px solid currentColor; opacity: .7;
+}
+.side::before, .spine::before { top: 7%; }
+.side::after, .spine::after { bottom: 7%; transform: scaleY(-1); }
+
+/* ── 책장 ── */
+.case { position: relative; max-width: 1040px; margin: 0 auto; filter: drop-shadow(0 20px 16px rgba(35, 24, 8, .38)); }
+.plank { /* 가로 널: 윗판과 밑판 */
+  background:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, .07) 0 1px, transparent 1px 5px),
+    linear-gradient(90deg, rgba(0, 0, 0, .14), transparent 12%, rgba(255, 255, 255, .08) 46%, transparent 80%, rgba(0, 0, 0, .18)),
+    linear-gradient(180deg, var(--wood-light), var(--wood) 55%, var(--wood-dark));
+}
+.case-top { position: relative; z-index: 2; height: 24px; margin: 0 -12px; border-radius: 4px 4px 2px 2px; box-shadow: inset 0 2px 0 rgba(255, 255, 255, .28), 0 4px 5px rgba(0, 0, 0, .35); }
+.case-base { height: 30px; border-radius: 0 0 3px 3px; box-shadow: inset 0 2px 0 rgba(255, 255, 255, .14), inset 0 -10px 12px rgba(0, 0, 0, .28); }
+.case-body { /* 옆판 두 장 사이에 선반 */
+  padding: 0 clamp(12px, 2.2vw, 20px);
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, .08) 0 1px, transparent 1px 6px),
+    linear-gradient(90deg, var(--wood-dark), var(--wood-light) 1.6%, var(--wood) 2.4%, var(--wood) 97.6%, var(--wood-light) 98.4%, var(--wood-dark));
+}
+.shelf {
+  display: flex; flex-wrap: wrap; align-items: flex-end; column-gap: 3px; row-gap: var(--B);
+  padding: 0 clamp(8px, 1.6vw, 16px); list-style: none; margin: 0;
+  background:
+    /* 선반 널 */
+    repeating-linear-gradient(180deg, transparent 0 var(--R), var(--wood-light) var(--R), var(--wood) calc(var(--R) + 9px), var(--wood-dark) calc(var(--R) + var(--B))),
+    /* 널 아래 그늘 */
+    repeating-linear-gradient(180deg, rgba(0, 0, 0, .62) 0, rgba(0, 0, 0, 0) 62px, rgba(0, 0, 0, 0) calc(var(--R) + var(--B))),
+    /* 양옆 그늘 */
+    linear-gradient(90deg, rgba(0, 0, 0, .5), transparent 7%, transparent 93%, rgba(0, 0, 0, .5)),
+    /* 뒤판 나무결 */
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .035) 0 2px, transparent 2px 74px),
+    var(--back);
+}
+.board { /* 칸과 칸 사이의 선반 널 */
+  height: var(--B);
+  background: linear-gradient(180deg, var(--wood-light), var(--wood) 9px, var(--wood-dark));
+}
+.slot { display: flex; align-items: flex-end; height: var(--R); max-width: 100%; min-width: 0; }
+.slot[hidden] { display: none; }
+.slot.decor { flex: 1 0 auto; justify-content: flex-end; padding-left: 12px; }
+
+/* 칸 이름표: 선반에 세워 둔 작은 종이 표지판 */
+.tag {
+  position: relative; display: flex; align-items: center; justify-content: center;
+  margin: 0 calc(8px * var(--k)) calc(6px * var(--k)) calc(2px * var(--k));
+  min-height: calc(76px * var(--k)); padding: calc(11px * var(--k)) calc(6px * var(--k));
+  writing-mode: vertical-rl; white-space: nowrap;
+  font-size: calc(14px * var(--k)); letter-spacing: .1em; color: #3B2A16;
+  background: var(--paper); border: 2px solid var(--brass); border-radius: 3px; box-shadow: 0 2px 4px rgba(0, 0, 0, .5);
+}
+.tag::after { /* 받침 */
+  content: ""; position: absolute; left: -5px; right: -5px; bottom: calc(-6px * var(--k) - 2px); height: calc(6px * var(--k));
+  border-radius: 2px 2px 0 0; background: linear-gradient(180deg, #CBA869, #86662F);
+}
+
+/* 꽂혀 있는 책(책등) */
+.book {
+  position: relative; display: flex; align-items: center; justify-content: center;
+  height: calc(var(--h) * var(--k)); min-width: calc(var(--w) * var(--k)); padding: 0 calc(11px * var(--k));
+  border: 0; border-radius: 4px 4px 1px 1px; background: none; color: var(--f); cursor: pointer;
+  font: inherit; -webkit-tap-highlight-color: transparent; transition: transform .18s ease;
+}
+.spine {
+  position: absolute; inset: 0; border-radius: inherit;
+  box-shadow: inset 0 -4px 0 rgba(0, 0, 0, .28), inset 0 2px 0 rgba(255, 255, 255, .16), 2px 0 3px rgba(0, 0, 0, .35);
+}
+.spine i { /* 둥근 책등의 빛 */
+  position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(90deg, rgba(0, 0, 0, .36), rgba(0, 0, 0, 0) 17%, rgba(255, 255, 255, .17) 38%, rgba(0, 0, 0, 0) 63%, rgba(0, 0, 0, .38));
+}
+.book .t {
+  position: relative; writing-mode: vertical-rl; height: calc((var(--h) - 70px) * var(--k));
+  font-family: var(--serif); font-weight: 700; font-size: calc(17px * var(--k)); line-height: 1.24; letter-spacing: .04em;
+  text-align: center; word-break: keep-all; overflow-wrap: anywhere;
+  max-width: calc(88px * var(--k)); overflow: hidden;   /* 아주 긴 제목은 네 줄까지만 보이고, 전체 제목은 표지에서 보인다 */
+}
+.book:hover, .book:focus-visible { transform: translateY(calc(-11px * var(--k))); }
+.book:focus-visible { outline: 3px solid #FFD75E; outline-offset: 3px; z-index: 2; }
+/* 뽑혀 나간 자리는 비어 있다 */
+.book[aria-pressed="true"] { transform: none; background: linear-gradient(90deg, rgba(0, 0, 0, .5), rgba(0, 0, 0, .18) 45%, rgba(0, 0, 0, .46)); box-shadow: inset 0 14px 16px rgba(0, 0, 0, .45); }
+.book[aria-pressed="true"] > * { visibility: hidden; }
+.book.returning { animation: slide-in .42s cubic-bezier(.2, .8, .3, 1); }
+@keyframes slide-in { from { transform: translateY(-30px); opacity: 0; } }
+
+/* 소품 */
+.prop { display: block; flex: none; }
+.prop.bookend { width: calc(40px * var(--k)); height: calc(104px * var(--k)); margin-left: -1px; }
+.prop.flask { width: calc(62px * var(--k)); height: calc(86px * var(--k)); margin-right: calc(16px * var(--k)); }
+.prop.plant { width: calc(74px * var(--k)); height: calc(100px * var(--k)); }
+
+/* ── 화면 가운데에 띄운 책 ── */
+.viewer {
+  --W: min(310px, 74vw);
+  width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0;
+  border: 0; background: transparent; overflow: auto; color: inherit;
+}
+.viewer::backdrop { background: rgba(28, 19, 9, .8); }
+.viewer-in { min-height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px; padding: 30px 16px; }
+.hold { position: relative; left: calc(var(--T) * .2); width: var(--W); }
+.putback {
+  padding: 11px 22px 10px; border-radius: 999px; border: 1.5px solid rgba(255, 255, 255, .8); background: rgba(0, 0, 0, .25);
+  font: inherit; font-size: 1rem; color: #fff; cursor: pointer;
+}
+.putback:hover { background: rgba(255, 255, 255, .16); }
+.putback:focus-visible { outline: 3px solid #FFD75E; outline-offset: 3px; }
+
+.empty { max-width: 900px; margin: 40px auto; font-family: var(--serif); font-size: 1.3rem; line-height: 1.6; text-align: center; word-break: keep-all; }
+
+@media (max-width: 760px) {
+  :root { --k: .86; --W: min(264px, 70vw); --T: 44px; }
+  .top { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+  .intro { justify-self: stretch; padding-bottom: 4px; }
+  .stage { margin-right: 0; left: calc(var(--T) * .2); }
+}
+@media (max-width: 430px) { .prop.plant { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .book { transition: none; }
+  .book:hover, .book:focus-visible { transform: none; }
+  .book.returning { animation: none; }
+}
