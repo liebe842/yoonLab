@@ -21,6 +21,7 @@
     <h1>yoonLab 작품 전시관</h1>
     <p id="guide">책장에서 책을 누르면 표지가 보여요. 표지의 ‘열어 보기’를 누르면 작품이 열립니다.</p>
     <p class="count" id="count"></p>
+    <button class="add-open" id="add-open" type="button" hidden>＋ 책 꽂기</button>
   </header>
   <section class="stage" id="stage" aria-live="polite" aria-label="뽑아 든 책">
     <div class="bk" id="bk"></div>
@@ -39,6 +40,29 @@
     <div class="hold" id="hold"><div class="bk" id="bk2"></div></div>
     <form method="dialog"><button class="putback">책장으로 돌아가기</button></form>
   </div>
+</dialog>
+
+<!-- 책 꽂기: 도서 카드 모양의 입력 칸. 비밀번호를 아는 사람만 꽂을 수 있다 -->
+<dialog class="adder" id="adder" aria-labelledby="adder-title">
+  <form class="card" id="add-form" novalidate>
+    <h2 id="adder-title">책 꽂기</h2>
+    <p class="card-note">새 작품을 책장에 꽂습니다. 비밀번호를 아는 사람만 꽂을 수 있어요.</p>
+    <label for="add-title">제목</label>
+    <input id="add-title" name="title" type="text" maxlength="80" autocomplete="off" required>
+    <label for="add-desc">한 줄 설명</label>
+    <input id="add-desc" name="description" type="text" maxlength="200" autocomplete="off">
+    <label for="add-url">주소</label>
+    <input id="add-url" name="url" type="url" inputmode="url" maxlength="500" placeholder="https://" autocomplete="off" required>
+    <label for="add-shelf">꽂을 칸</label>
+    <select id="add-shelf" name="shelf"></select>
+    <label for="add-pass">비밀번호</label>
+    <input id="add-pass" name="password" type="password" autocomplete="off" required>
+    <p class="card-msg" id="add-msg" role="alert"></p>
+    <div class="card-actions">
+      <button class="card-go" id="add-go" type="submit">꽂기</button>
+      <button class="card-cancel" id="add-cancel" type="button">닫기</button>
+    </div>
+  </form>
 </dialog>
 
 <noscript><p class="empty">이 페이지는 자바스크립트가 켜져 있어야 책장이 보입니다.</p></noscript>
